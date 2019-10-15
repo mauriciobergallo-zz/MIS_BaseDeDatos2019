@@ -2,10 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -26,6 +29,20 @@ namespace SchoolApp
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            
+            // DI of repositories
+            services.AddScoped<Repositories.IStudentRepository, Repositories.Implementations.StudentRepository>();
+            
+            // Infra Services
+            var mappingConfig = new MapperConfiguration(x =>
+            {
+                x.AddProfile(new Repositories.DTO.Mappers.EntitiesToDto());
+            });
+            services.AddSingleton(mappingConfig.CreateMapper());
+            
+            services.AddDbContext<Repositories.DataAccess.SchoolAppDbContext>(opts =>
+                opts.UseNpgsql(
+                    "User ID=postgres;Password=postgres;Server=localhost;Port=5432;Database=school_app;"));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
