@@ -7,7 +7,13 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SchoolApp", "SchoolApp\Scho
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Test", "Test", "{704D5807-1AFF-4138-B361-435787B58287}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SchoolApp.Test", "Tests\SchoolApp.Test\SchoolApp.Test.csproj", "{F09A6553-FA5F-4ACB-8F68-361F1664487F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SchoolApp.Domain", "SchoolApp.Domain\SchoolApp.Domain.csproj", "{ECBAC40F-F00D-4A46-8A27-DE016FE67DC8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SchoolApp.Repository", "SchoolApp.Repository\SchoolApp.Repository.csproj", "{5A11C15E-F955-4BCD-82D8-61BE8B75B4C4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SchoolApp.Services", "SchoolApp.Services\SchoolApp.Services.csproj", "{1C93235B-0C6F-4FFC-9E0D-65B3A3116566}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SchoolApp.Services.UnitTest", "SchoolApp.Services.UnitTest\SchoolApp.Services.UnitTest.csproj", "{567B5115-2BFD-472F-B2E9-547D72495CB3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -19,10 +25,22 @@ Global
 		{636A4C8B-AEFA-4969-85B5-92A4101EE0BB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{636A4C8B-AEFA-4969-85B5-92A4101EE0BB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{636A4C8B-AEFA-4969-85B5-92A4101EE0BB}.Release|Any CPU.Build.0 = Release|Any CPU
-		{F09A6553-FA5F-4ACB-8F68-361F1664487F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F09A6553-FA5F-4ACB-8F68-361F1664487F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F09A6553-FA5F-4ACB-8F68-361F1664487F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F09A6553-FA5F-4ACB-8F68-361F1664487F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ECBAC40F-F00D-4A46-8A27-DE016FE67DC8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ECBAC40F-F00D-4A46-8A27-DE016FE67DC8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ECBAC40F-F00D-4A46-8A27-DE016FE67DC8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ECBAC40F-F00D-4A46-8A27-DE016FE67DC8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5A11C15E-F955-4BCD-82D8-61BE8B75B4C4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5A11C15E-F955-4BCD-82D8-61BE8B75B4C4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5A11C15E-F955-4BCD-82D8-61BE8B75B4C4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5A11C15E-F955-4BCD-82D8-61BE8B75B4C4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1C93235B-0C6F-4FFC-9E0D-65B3A3116566}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1C93235B-0C6F-4FFC-9E0D-65B3A3116566}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1C93235B-0C6F-4FFC-9E0D-65B3A3116566}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1C93235B-0C6F-4FFC-9E0D-65B3A3116566}.Release|Any CPU.Build.0 = Release|Any CPU
+		{567B5115-2BFD-472F-B2E9-547D72495CB3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{567B5115-2BFD-472F-B2E9-547D72495CB3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{567B5115-2BFD-472F-B2E9-547D72495CB3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{567B5115-2BFD-472F-B2E9-547D72495CB3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -31,6 +49,6 @@ Global
 		SolutionGuid = {5A1419F3-8DA2-48D1-BFD1-7324740CC703}
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{F09A6553-FA5F-4ACB-8F68-361F1664487F} = {704D5807-1AFF-4138-B361-435787B58287}
+		{567B5115-2BFD-472F-B2E9-547D72495CB3} = {704D5807-1AFF-4138-B361-435787B58287}
 	EndGlobalSection
 EndGlobal
