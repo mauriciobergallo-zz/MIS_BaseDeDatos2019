@@ -1,72 +1,71 @@
 ﻿using System;
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
-using SchoolApp.Models;
 
 namespace SchoolApp.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/students")]
     [ApiController]
     public class StudentsController : ControllerBase
     {
-        private Repositories.IStudentRepository _studentRepository;
-        public StudentsController(Repositories.IStudentRepository studentRepository)
+        private Domain.Repositories.IStudentRepository _studentRepository;
+        public StudentsController(Domain.Repositories.IStudentRepository studentRepository)
         {
             _studentRepository = studentRepository;
         }
         
         // GET api/students
         [HttpGet]
-        public ActionResult<IEnumerable<Models.Student>> Get()
+        public ActionResult<IEnumerable<Domain.Entities.Student>> Get()
         {
             return Ok(_studentRepository.Get());
         }
         
         // GET api/students/{id}
         [HttpGet("{id}")]
-        public ActionResult<IEnumerable<Models.Student>> Get(string id)
+        public ActionResult<IEnumerable<Domain.Entities.Student>> Get(string id)
         {
             if (!Guid.TryParse(id, out var idRequested))
             {
                 return BadRequest("Invalid ID Format");
             }
 
-            var studentRequested = _studentRepository.Get(idRequested);
-            if (studentRequested == null)
+            var objectRequested = _studentRepository.Get(idRequested);
+            if (objectRequested == null)
             {
                 return NotFound();
             }
 
-            return Ok(studentRequested);
+            return Ok(objectRequested);
         }
 
         // POST api/students
         [HttpPost]
-        public IActionResult Post(Models.Student student)
+        public IActionResult Post(Domain.Entities.Student entity)
         {
-            var newStudent = _studentRepository.Add(student);
-            return Redirect("/api/students/" + newStudent.Id);
+            var newObject = _studentRepository.Add(entity);
+            return Redirect("/api/students/" + newObject.Id);
         }
         
         // PUT api/students/{id}
         [HttpPut("{id}")]
-        public IActionResult Put(string id, [FromBody] Models.Student student)
+        public IActionResult Put(string id, [FromBody] Domain.Entities.Student entity)
         {
             if (!Guid.TryParse(id, out var idRequested))
             {
                 return BadRequest("Invalid ID Format");
             }
             
-            var studentUpdated = _studentRepository.Update(student);
-            if (studentUpdated == null)
+            var objectUpdated = _studentRepository.Update(entity);
+            if (objectUpdated == null)
             {
                 return NotFound();
             }
 
-            return Redirect("/api/students/" + studentUpdated.Id);
+            return Redirect("/api/students/" + objectUpdated.Id);
         }
         
-        // PUT api/students/{id}
+        // DELETE api/students/{id}
         [HttpDelete("{id}")]
         public IActionResult Delete(string id)
         {

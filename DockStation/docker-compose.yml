@@ -3,4 +3,6 @@ services:
   postgres:
     image: postgres
     ports:
-      - "5432:5432"
+      - '5432:5432'
+    volumes:
+      - /bd2019_volumes/db:/var/lib/postgresql
