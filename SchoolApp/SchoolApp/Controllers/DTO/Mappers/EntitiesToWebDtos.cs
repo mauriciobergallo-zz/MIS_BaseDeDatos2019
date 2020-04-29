@@ -37,6 +37,22 @@ namespace SchoolApp.Controllers.DTO.Mappers
                 .ForMember(dest => dest.StudyPlan, 
                     cfg => cfg.MapFrom(src => src.StudyPlan.Name))
                 ;
+
+            CreateMap<StudentEnrolledInCourse, CourseEnrollmentGetResponseDto>()
+                .ForMember(dest => dest.Id, 
+                    cfg => cfg.MapFrom(src => src.Id))
+                .ForMember(dest => dest.StudentId, 
+                    cfg => cfg.MapFrom(src => src.Enrollment.Student.Id))
+                .ForMember(dest => dest.StudentName, 
+                    cfg => cfg.MapFrom(src => $"{src.Enrollment.Student.FirstName} {src.Enrollment.Student.LastName}"))
+                .ForMember(dest => dest.EnrollmentId, 
+                    cfg => cfg.MapFrom(src => src.Enrollment.Id))
+                ;
+
+            CreateMap<StudentEnrolledInCourse, StudentEnrolledInCourseGetResponseDto>()
+                .ForMember(dest => dest.Course,
+                    cfg => cfg.MapFrom(src => src.Course))
+                ;
         }
     }
 }

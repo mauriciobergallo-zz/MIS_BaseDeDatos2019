@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using SchoolApp.Controllers.DTO;
+using SchoolApp.Domain.Entities;
 using SchoolApp.Domain.Repositories;
 using SchoolApp.Domain.Services;
 
@@ -13,16 +14,17 @@ namespace SchoolApp.Controllers
     public class CoursesController : ControllerBase
     {
         private readonly ICourseRepository _courseRepository;
-        private readonly ICourseGenerationService _courseGenerationService;
+        private readonly IStudentEnrolledInCourseRepository _studentEnrolledInCourseRepository;
         private readonly ICourseService _courseService;
         private readonly IMapper _mapper;
 
-        public CoursesController(ICourseRepository courseRepository, IMapper mapper, ICourseGenerationService courseGenerationService, ICourseService courseService)
+        public CoursesController(ICourseRepository courseRepository, ICourseService courseService, IMapper mapper, 
+            IStudentEnrolledInCourseRepository studentEnrolledInCourseRepository)
         {
+            _courseService = courseService;
             _courseRepository = courseRepository;
             _mapper = mapper;
-            _courseGenerationService = courseGenerationService;
-            _courseService = courseService;
+            _studentEnrolledInCourseRepository = studentEnrolledInCourseRepository;
         }
         
         // GET api/courses
@@ -35,7 +37,7 @@ namespace SchoolApp.Controllers
         
         // GET api/courses/{id}
         [HttpGet("{id}")]
-        public ActionResult<IEnumerable<Domain.Entities.Course>> Get(string id)
+        public ActionResult<IEnumerable<Course>> Get(string id)
         {
             if (!Guid.TryParse(id, out var idRequested))
             {
@@ -91,5 +93,37 @@ namespace SchoolApp.Controllers
             return Accepted();
         }
 
+        // GET api/courses/{id}/enrollments
+        [HttpGet("{id}/enrollments")]
+        public ActionResult<IEnumerable<CourseEnrollmentGetResponseDto>> GetEnrollments(Guid id)
+        {
+            var course = _courseRepository.Get(id, "enrollments,enrollments.studentEnrolled,enrollments.studentEnrolled.student");
+            return Ok(_mapper.Map<IEnumerable<CourseEnrollmentGetResponseDto>>(course.StudentsEnrolled));
+        }
+        
+        // GET api/courses/{id}/enrollments/{enrollmentId}
+        [HttpGet("{id}/enrollments/{enrollmentId}")]
+        public ActionResult<StudentEnrolledInCourseGetResponseDto> GetEnrollment(Guid id, Guid enrollmentId)
+        {
+            var studentEnrolledInCourse = _studentEnrolledInCourseRepository.Get(enrollmentId, 
+                "course,studentEnrolled.student,studentEnrolled.studyPlan");
+            return Ok(_mapper.Map<StudentEnrolledInCourseGetResponseDto>(studentEnrolledInCourse));
+        }
+        
+        // POST api/courses/{id}/enrollments
+        [HttpPost("{id}/enrollments")]
+        public ActionResult PostEnrollment(CourseEnrollmentPostRequestDto entity)
+        {
+            var enrollment = _courseService.EnrollStudent(entity.CourseId, entity.EnrollmentId);
+            return Redirect($"/api/courses/{entity.CourseId}/enrollments/{enrollment.Id}");
+        }
+        
+        // DELETE api/courses/{id}/enrollments/{enrollmentId}
+        [HttpDelete("{id}/enrollments/{enrollmentId}")]
+        public ActionResult<IEnumerable<Course>> DeleteEnrollment(Guid id, Guid enrollmentId)
+        {
+            _studentEnrolledInCourseRepository.Delete(enrollmentId);
+            return Accepted();
+        }
     }
 }

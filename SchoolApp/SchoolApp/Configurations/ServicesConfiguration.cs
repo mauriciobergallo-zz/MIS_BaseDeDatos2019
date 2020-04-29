@@ -29,6 +29,7 @@ namespace SchoolApp.Configurations
             services.AddScoped<IStudyPlanRepository, StudyPlanRepository>();
             services.AddScoped<ISubjectRepository, SubjectRepository>();
             services.AddScoped<ITeacherRepository, TeacherRepository>();
+            services.AddScoped<IStudentEnrolledInCourseRepository, StudentEnrolledInCourseRepository>();
 
             // DI of Services
             services.AddScoped<IStudyPlanService, StudyPlanService>();
@@ -38,6 +39,7 @@ namespace SchoolApp.Configurations
             services
                 .AddScoped<IRegistrationAndEnrollmentInStudyPlanOfStudentService,
                     RegistrationAndEnrollmentInStudyPlanOfStudentService>();
+            services.AddScoped<IStudentEnrollmentInCourseService, StudentEnrollmentInCourseService>();
             
             return services;
         }

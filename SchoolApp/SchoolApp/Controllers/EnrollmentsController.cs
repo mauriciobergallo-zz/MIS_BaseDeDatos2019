@@ -58,25 +58,7 @@ namespace SchoolApp.Controllers
             var newObject = _enrollmentService.Add(entity.StudentId, entity.StudyPlanId);
             return Redirect("/api/enrollments/" + newObject.Id);
         }
-        
-        // PUT api/students/{id}
-        [HttpPut("{id}")]
-        public IActionResult Put(string id, [FromBody] Enrollment entity)
-        {
-            if (!Guid.TryParse(id, out var idRequested))
-            {
-                return BadRequest("Invalid ID Format");
-            }
-            
-            var objectUpdated = _enrollmentRepository.Update(entity);
-            if (objectUpdated == null)
-            {
-                return NotFound();
-            }
 
-            return Redirect("/api/enrollments/" + objectUpdated.Id);
-        }
-        
         // DELETE api/students/{id}
         [HttpDelete("{id}")]
         public IActionResult Delete(string id)
