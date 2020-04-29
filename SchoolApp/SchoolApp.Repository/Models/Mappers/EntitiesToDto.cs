@@ -39,8 +39,12 @@ namespace SchoolApp.Repository.Models.Mappers
                     cfg => cfg.MapFrom(src => src.Id))
                 .ForMember(dest => dest.courseId,
                     cfg => cfg.MapFrom(src => src.Course.Id))
+                .ForMember(dest => dest.course,
+                    cfg => cfg.Ignore())
                 .ForMember(dest => dest.studentEnrolledId,
                     cfg => cfg.MapFrom(src => src.Enrollment.Id))
+                .ForMember(dest => dest.studentEnrolled,
+                    cfg => cfg.Ignore())
                 ;
             
             CreateMap<StudentEnrolledInCourseDto, StudentEnrolledInCourse>()
@@ -56,9 +60,13 @@ namespace SchoolApp.Repository.Models.Mappers
                 .ForMember(dest => dest.id,
                     cfg => cfg.MapFrom(src => src.Id))
                 .ForMember(dest => dest.student,
-                    cfg => cfg.MapFrom(src => src.Student))
+                    cfg => cfg.Ignore())
+                .ForMember(dest => dest.studentId,
+                    cfg => cfg.MapFrom(src => src.Student.Id))
                 .ForMember(dest => dest.studyPlan,
-                    cfg => cfg.MapFrom(src => src.StudyPlan))
+                    cfg => cfg.Ignore())
+                .ForMember(dest => dest.studyPlanId,
+                    cfg => cfg.MapFrom(src => src.StudyPlan.Id))
                 ;
             
             CreateMap<EnrollmentDto, Enrollment>()

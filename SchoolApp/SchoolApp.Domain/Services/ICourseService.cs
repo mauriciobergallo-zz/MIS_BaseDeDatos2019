@@ -6,5 +6,6 @@ namespace SchoolApp.Domain.Services
     public interface ICourseService
     {
         Course AddCourse(Guid teacherId, Guid subjectId, Guid studyPlanId);
+        StudentEnrolledInCourse EnrollStudent(Guid courseId, Guid enrollmentId);
     }
 }

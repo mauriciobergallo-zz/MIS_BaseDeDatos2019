@@ -11,15 +11,23 @@ namespace SchoolApp.Services.Implementations
         private readonly ITeacherRepository _teacherRepository;
         private readonly ISubjectRepository _subjectRepository;
         private readonly IStudyPlanRepository _studyPlanRepository;
+        private readonly ICourseRepository _courseRepository;
+        private readonly IEnrollmentRepository _enrollmentRepository;
         private readonly ICourseGenerationService _courseGenerationService;
+        private readonly IStudentEnrollmentInCourseService _studentEnrollmentService;
 
         public CourseService(IStudyPlanRepository studyPlanRepository, ISubjectRepository subjectRepository, 
-            ITeacherRepository teacherRepository, ICourseGenerationService courseGenerationService)
+            ITeacherRepository teacherRepository, ICourseGenerationService courseGenerationService, 
+            ICourseRepository courseRepository, IEnrollmentRepository enrollmentRepository, 
+            IStudentEnrollmentInCourseService studentEnrollmentService)
         {
             _studyPlanRepository = studyPlanRepository;
             _subjectRepository = subjectRepository;
             _teacherRepository = teacherRepository;
             _courseGenerationService = courseGenerationService;
+            _courseRepository = courseRepository;
+            _enrollmentRepository = enrollmentRepository;
+            _studentEnrollmentService = studentEnrollmentService;
         }
 
         public Course AddCourse(Guid teacherId, Guid subjectId, Guid studyPlanId)
@@ -39,6 +47,19 @@ namespace SchoolApp.Services.Implementations
 
             // Execution
             return _courseGenerationService.DoGenerateCourse(teacher, subject, studyPlan);
+        }
+
+        public StudentEnrolledInCourse EnrollStudent(Guid courseId, Guid enrollmentId)
+        {
+            var existentCourse = _courseRepository.Get(courseId);
+            if (existentCourse == null)
+                throw new Exception("There is no Course with the specified ID");
+
+            var existentEnrollment = _enrollmentRepository.Get(enrollmentId);
+            if (existentEnrollment == null)
+                throw new Exception("There are no enrollments for the specified ID");
+            
+            return _studentEnrollmentService.DoEnrollment(existentCourse, existentEnrollment);
         }
     }
 }
